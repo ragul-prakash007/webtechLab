@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>App Feedback & Rating Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+  <!-- App Feedback Form -->
+  <h1>App Feedback & Rating Form</h1>
+
+  <form action="/serverlogic" method="post" autocomplete="on">
+
+    <fieldset>
+      <legend>Personal Information</legend>
+
+      <p>
+        <label for="fullname">Full Name:</label><br>
+        <input type="text" id="fullname" name="fullname" required placeholder="Enter your name" autofocus>
+      </p>
+
+      <p>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required placeholder="your@example.com">
+      </p>
+
+      <p>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required minlength="6" maxlength="16">
+      </p>
+
+      <p>
+        <label for="phone">Phone Number:</label><br>
+        <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" placeholder="10-digit number">
+      </p>
+
+      <p>
+        <label for="dob">Date of Birth:</label><br>
+        <input type="date" id="dob" name="dob" required>
+      </p>
+
+      <p>
+        <label for="age">Age:</label><br>
+        <input type="number" id="age" name="age" required min="10" max="100">
+      </p>
+
+      <p>
+        <label for="website">Website:</label><br>
+        <input type="url" id="website" name="website" required placeholder="https://example.com">
+      </p>
+
+      <p>
+        <label for="search">Search Feature:</label><br>
+        <input type="search" id="search" name="search" placeholder="Search something...">
+      </p>
+
+      <p>
+        <label for="screenshot">Upload Screenshot:</label><br>
+        <input type="file" id="screenshot" name="screenshot" required>
+      </p>
+    </fieldset>
+
+    <fieldset>
+      <legend>App Experience</legend>
+
+      <p>
+        <label for="satisfaction">How satisfied are you?</label><br>
+        <select id="satisfaction" name="satisfaction" required>
+          <option value="">--Select--</option>
+          <option value="very_satisfied">Very Satisfied</option>
+          <option value="satisfied">Satisfied</option>
+          <option value="neutral">Neutral</option>
+          <option value="dissatisfied">Dissatisfied</option>
+          <option value="very_dissatisfied">Very Dissatisfied</option>
+        </select>
+      </p>
+
+      <p>
+        <label>Rate the App:</label><br>
+        <input type="radio" id="rate1" name="rating" value="1" required>
+        <label for="rate1">1</label>
+
+        <input type="radio" id="rate2" name="rating" value="2">
+        <label for="rate2">2</label>
+
+        <input type="radio" id="rate3" name="rating" value="3">
+        <label for="rate3">3</label>
+
+        <input type="radio" id="rate4" name="rating" value="4">
+        <label for="rate4">4</label>
+
+        <input type="radio" id="rate5" name="rating" value="5">
+        <label for="rate5">5</label>
+      </p>
+
+      <p>
+        <label>Features You Used:</label><br>
+        <input type="checkbox" id="login" name="feature_login" value="Login">
+        <label for="login">Login</label><br>
+
+        <input type="checkbox" id="chat" name="feature_chat" value="Chat">
+        <label for="chat">Chat</label><br>
+
+        <input type="checkbox" id="notifications" name="feature_notifications" value="Notifications">
+        <label for="notifications">Notifications</label><br>
+
+        <input type="checkbox" id="upload" name="feature_upload" value="File Upload">
+        <label for="upload">File Upload</label>
+      </p>
+
+      <p>
+        <label for="comments">Feedback:</label><br>
+        <textarea id="comments" name="comments" rows="4" cols="40" placeholder="Your comments here..."></textarea>
+      </p>
+
+      <p>
+        <label for="progress">Progress:</label><br>
+        <progress id="progress" value="60" max="100"></progress>
+      </p>
+
+    </fieldset>
+
+    <p>
+      <input type="submit" value="Submit">
+      <input type="reset" value="Reset">
+    </p>
+
+  </form>
+
+</body>
+</html>
