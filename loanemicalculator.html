@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ragul's Bank Loan EMI Calculator</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      color: #333;
+    }
+
+    h1 {
+      color: #1a1a1a;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .calculator {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+      width: 350px;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #4CAF50;
+      box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #e9f7ef;
+      border: 2px solid #4CAF50;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #2e7d32;
+      display: none;
+      animation: popUp 0.6s ease-in-out;
+    }
+
+    @keyframes popUp {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>🏦 Ragul's Bank Loan EMI Calculator</h1>
+
+  <div class="calculator">
+    <label for="loan">Loan Amount (₹):</label>
+    <input type="number" id="loan" placeholder="Enter loan amount" required>
+
+    <label for="rate">Annual Interest Rate (%):</label>
+    <input type="number" id="rate" placeholder="Enter interest rate" required>
+
+    <label for="years">Loan Tenure (Years):</label>
+    <input type="number" id="years" placeholder="Enter tenure in years" required>
+
+    <button onclick="calculateEMI()">Calculate EMI</button>
+
+    <div class="result" id="resultBox">
+      Your Monthly EMI: ₹ <span id="emiResult"></span>
+    </div>
+  </div>
+
+  <script>
+    function calculateEMI() {
+      const P = parseFloat(document.getElementById('loan').value);
+      const annualRate = parseFloat(document.getElementById('rate').value);
+      const years = parseFloat(document.getElementById('years').value);
+
+      if (isNaN(P) || isNaN(annualRate) || isNaN(years) || P <= 0 || annualRate <= 0 || years <= 0) {
+        alert("⚠️ Please enter valid positive numbers in all fields!");
+        return;
+      }
+
+      const R = annualRate / 12 / 100; // Monthly Interest Rate
+      const N = years * 12;            // Total months
+
+      const EMI = (P * R * Math.pow(1 + R, N)) / (Math.pow(1 + R, N) - 1);
+      const emiRounded = EMI.toFixed(2);
+
+      const resultBox = document.getElementById('resultBox');
+      document.getElementById('emiResult').innerText = emiRounded;
+      resultBox.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>

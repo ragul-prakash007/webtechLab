@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ragul's Cake Shop</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background-color: #fff8f8;
+      text-align: center;
+    }
+
+    header {
+      background-color: #bf0f0f;
+      color: white;
+      padding: 20px 0;
+      font-size: 28px;
+      letter-spacing: 1px;
+      font-weight: bold;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+
+    .cake-gallery {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 30px 0;
+      gap: 25px;
+    }
+
+    .cake-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      width: 200px;
+      padding: 15px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .cake-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .cake-card img {
+      width: 100%;
+      border-radius: 10px;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .cake-card p {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    h2 {
+      margin-top: 30px;
+      color: #b30059;
+      text-decoration: underline;
+    }
+
+    .order-form {
+      width: 60%;
+      margin: 20px auto;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      transition: all 0.3s ease;
+    }
+
+    input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      font-size: 15px;
+      transition: border-color 0.2s ease;
+    }
+
+    input:focus {
+      border-color: #b30059;
+    }
+
+    button {
+      background-color: #0056d6;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-top: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #003e9e;
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 25px;
+      font-size: 20px;
+      font-weight: bold;
+      color: green;
+      padding: 15px;
+      border-radius: 8px;
+      background-color: #eaffea;
+      display: inline-block;
+      animation: fadeIn 0.7s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 15px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>🎂 Ragul's Cake Shop 🎂</header>
+
+  <div class="cake-gallery">
+    <div class="cake-card">
+      <img src="/exp5/images/download.jpg" alt="Rainbow Cake">
+      <p>Rainbow Cake — Rs. 300</p>
+    </div>
+    <div class="cake-card">
+      <img src="/exp5/images/WhatsApp-Image-2023-11-01-at-5.39.28-PM-1-scaled-e1698841246352.jpeg" alt="Chocolate Cake">
+      <p>Chocolate Cake — Rs. 200</p>
+    </div>
+    <div class="cake-card">
+      <img src="/exp5/images/heartfelt_red_velvet_cake.webp" alt="Red Velvet Cake">
+      <p>Red Velvet Cake — Rs. 250</p>
+    </div>
+    <div class="cake-card">
+      <img src="/exp5/images/Black-Forest-Cake-Heart-Shape.webp" alt="Black Forest Cake">
+      <p>Black Forest Cake — Rs. 350</p>
+    </div>
+  </div>
+
+  <h2>Order Cake</h2>
+
+  <div class="order-form">
+    <div>
+      <label>Rainbow Cake (Quantity)</label><br />
+      <input type="number" id="rainbow" min="0" placeholder="Enter quantity" />
+    </div>
+    <div>
+      <label>Chocolate Cake (Quantity)</label><br />
+      <input type="number" id="chocolate" min="0" placeholder="Enter quantity" />
+    </div>
+    <div>
+      <label>Red Velvet Cake (Quantity)</label><br />
+      <input type="number" id="redvelvet" min="0" placeholder="Enter quantity" />
+    </div>
+    <div>
+      <label>Black Forest Cake (Quantity)</label><br />
+      <input type="number" id="blackforest" min="0" placeholder="Enter quantity" />
+    </div>
+
+    <button onclick="calculateBill()">Place Order</button>
+
+    <div id="output" class="result" style="display:none;"></div>
+  </div>
+
+  <footer>© 2025 Ragul's Cake Shop | All Rights Reserved</footer>
+
+  <script>
+    function calculateBill() {
+      const rainbow = parseInt(document.getElementById('rainbow').value) || 0;
+      const chocolate = parseInt(document.getElementById('chocolate').value) || 0;
+      const redvelvet = parseInt(document.getElementById('redvelvet').value) || 0;
+      const blackforest = parseInt(document.getElementById('blackforest').value) || 0;
+
+      if (rainbow < 0 || chocolate < 0 || redvelvet < 0 || blackforest < 0) {
+        alert("Please enter valid positive quantities!");
+        return;
+      }
+
+      const total =
+        rainbow * 300 +
+        chocolate * 200 +
+        redvelvet * 250 +
+        blackforest * 350;
+
+      const output = document.getElementById('output');
+      output.style.display = "block";
+      output.innerHTML = `
+        🛒 Purchase Order Bill!!! <br><br>
+        <span style="background:#28a745; color:white; padding:10px 20px; border-radius:8px;">
+          Total Price: Rs. ${total.toFixed(2)}
+        </span>
+      `;
+    }
+  </script>
+</body>
+</html>
