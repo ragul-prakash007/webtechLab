@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GST Calculator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #1a2a6c, #b21f1f);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 25px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            border-color: #1a2a6c;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 42, 108, 0.2);
+        }
+        
+        .result-container {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid #1a2a6c;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .result-label {
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .result-value {
+            font-weight: 700;
+            color: #1a2a6c;
+        }
+        
+        .total {
+            font-size: 20px;
+            color: #b21f1f;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 14px;
+            border-top: 1px solid #e1e1e1;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-calculate {
+            background-color: #1a2a6c;
+            color: white;
+            flex: 1;
+            margin-right: 10px;
+        }
+        
+        .btn-reset {
+            background-color: #e9ecef;
+            color: #6c757d;
+            flex: 1;
+            margin-left: 10px;
+        }
+        
+        .btn-calculate:hover {
+            background-color: #0d1a4d;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-reset:hover {
+            background-color: #dee2e6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .animation-area {
+            height: 5px;
+            background: linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d);
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: width 0.5s;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 5px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>GST Calculator</h1>
+            <p>Calculate Goods and Services Tax easily</p>
+        </div>
+        
+        <div class="content">
+            <div class="input-group">
+                <label for="amount">Enter Amount (₹)</label>
+                <input type="number" id="amount" placeholder="Enter amount">
+            </div>
+            
+            <div class="input-group">
+                <label for="gstRate">Select GST Rate</label>
+                <select id="gstRate">
+                    <option value="5">5%</option>
+                    <option value="12">12%</option>
+                    <option value="18" selected>18%</option>
+                    <option value="28">28%</option>
+                </select>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-calculate" id="calculateBtn">Calculate GST</button>
+                <button class="btn btn-reset" id="resetBtn">Reset</button>
+            </div>
+            
+            <div class="animation-area" id="animationBar"></div>
+            
+            <div class="result-container" id="resultContainer">
+                <div class="result-item">
+                    <span class="result-label">Actual Amount:</span>
+                    <span class="result-value" id="actualAmount">₹ 0.00</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">GST Amount:</span>
+                    <span class="result-value" id="gstAmount">₹ 0.00</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Total Amount:</span>
+                    <span class="result-value total" id="totalAmount">₹ 0.00</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Made with ❤️ for GST calculations
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // jQuery actions implementation
+            
+            // 1. Focus and Blur events
+            $('#amount').focus(function() {
+                $(this).css('border-color', '#1a2a6c');
+                $(this).addClass('highlight');
+            }).blur(function() {
+                $(this).css('border-color', '#e1e1e1');
+                $(this).removeClass('highlight');
+            });
+            
+            // 2. Change event for dropdown
+            $('#gstRate').change(function() {
+                const selectedRate = $(this).val();
+                $('#gstRate').css('border-color', '#b21f1f');
+                setTimeout(function() {
+                    $('#gstRate').css('border-color', '#e1e1e1');
+                }, 1000);
+            });
+            
+            // 3. Click event for calculate button
+            $('#calculateBtn').click(function() {
+                calculateGST();
+                
+                // Button animation
+                $(this).css('transform', 'scale(0.95)');
+                setTimeout(() => {
+                    $(this).css('transform', 'scale(1)');
+                }, 200);
+            });
+            
+            // 4. Double click event for reset button
+            $('#resetBtn').dblclick(function() {
+                resetCalculator();
+            });
+            
+            // 5. Keyup event for amount input
+            $('#amount').keyup(function() {
+                // Animate the progress bar based on input length
+                const inputLength = $(this).val().length;
+                const maxLength = 10;
+                const percentage = Math.min((inputLength / maxLength) * 100, 100);
+                $('#animationBar').css('width', percentage + '%');
+            });
+            
+            // 6. Hover effects
+            $('.btn').hover(
+                function() {
+                    $(this).css('transform', 'translateY(-2px)');
+                },
+                function() {
+                    $(this).css('transform', 'translateY(0)');
+                }
+            );
+            
+            // 7. Hide/Show result container
+            $('#resultContainer').hide();
+            
+            // 8. Toggle animation
+            $('#amount').on('input', function() {
+                if ($(this).val() !== '') {
+                    $('#resultContainer').slideDown(500);
+                } else {
+                    $('#resultContainer').slideUp(500);
+                }
+            });
+            
+            // 9. Fade effects
+            $('.input-group').hover(
+                function() {
+                    $(this).find('label').fadeTo(200, 0.8);
+                },
+                function() {
+                    $(this).find('label').fadeTo(200, 1);
+                }
+            );
+            
+            // Function to calculate GST
+            function calculateGST() {
+                const amount = parseFloat($('#amount').val());
+                const gstRate = parseFloat($('#gstRate').val());
+                
+                if (isNaN(amount) || amount <= 0) {
+                    alert('Please enter a valid amount');
+                    return;
+                }
+                
+                const gstAmount = (amount * gstRate) / 100;
+                const totalAmount = amount + gstAmount;
+                
+                // Animate the result values
+                $('#actualAmount').text('₹ 0.00').animate({
+                    opacity: 0.3
+                }, 300, function() {
+                    $(this).text('₹ ' + amount.toFixed(2)).animate({
+                        opacity: 1
+                    }, 300);
+                });
+                
+                $('#gstAmount').text('₹ 0.00').animate({
+                    opacity: 0.3
+                }, 500, function() {
+                    $(this).text('₹ ' + gstAmount.toFixed(2)).animate({
+                        opacity: 1
+                    }, 300);
+                });
+                
+                $('#totalAmount').text('₹ 0.00').animate({
+                    opacity: 0.3
+                }, 700, function() {
+                    $(this).text('₹ ' + totalAmount.toFixed(2)).animate({
+                        opacity: 1
+                    }, 300);
+                });
+                
+                // Show result container with animation
+                $('#resultContainer').slideDown(800);
+            }
+            
+            // Function to reset calculator
+            function resetCalculator() {
+                $('#amount').val('');
+                $('#gstRate').val('18');
+                $('#actualAmount').text('₹ 0.00');
+                $('#gstAmount').text('₹ 0.00');
+                $('#totalAmount').text('₹ 0.00');
+                $('#animationBar').css('width', '0%');
+                
+                // Fade out result container
+                $('#resultContainer').fadeOut(500);
+            }
+        });
+    </script>
+</body>
+</html>
